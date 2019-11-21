@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+
+  mongo:
+    image: mongo:4.2.1
+    ports:
+    - 27018:27017
+    networks:
+    - backend
+
+  app-server:
+    image: reactive-cinema
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+    - 8080:8080
+    depends_on:
+    - mongo
+    restart: always
+    networks:
+    - backend
+
+networks:
+  backend:
